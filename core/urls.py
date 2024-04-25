@@ -9,5 +9,6 @@ app_name = 'core'
 
 urlpatterns = [
     path('', include('authentication.urls')),
-    path('dashboard/', Dashboard.as_view(), name='dashboard')
-]
+    path('inventory/', include('inventory.urls')),
+    path('dashboard/', Dashboard.as_view(), name='dashboard'),
+] 

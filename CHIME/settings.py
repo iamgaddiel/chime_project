@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     
     # Apps
     'authentication',
-    'core'
+    'core',
+    'inventory'
 ]
 
 MIDDLEWARE = [
@@ -122,7 +123,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    '/authentication/static'
+    '/authentication/static',
     '/core/static'
 ]
 
