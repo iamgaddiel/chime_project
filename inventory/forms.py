@@ -1,6 +1,10 @@
+from typing import Any, Mapping
 from django import forms
+from django.core.files.base import File
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
 
-from .models import Product, Supplier
+from .models import Product, Supplier, Sale
 
 
 class ProductCreateForm(forms.ModelForm):
@@ -17,3 +21,42 @@ class SupplierCreationForm(forms.ModelForm):
         exclude = ['supplier_id']
 
 
+class SaleCreationForm(forms.ModelForm):
+    class Meta:
+        model = Sale
+        exclude = ['sale_id', 'transaction_status']
+        widgets = {
+            'buyer_name' : forms.TextInput(attrs={
+                'class' : 'form-control',
+                'placeholder': 'Name of buyer'
+            }),
+            'quantity' : forms.TextInput(attrs={
+                'class' : 'form-control',
+                'placeholder': '10,000',
+                'type': 'number',
+                'min': 1
+            }),
+            'paid' : forms.TextInput(attrs={
+                'class' : 'form-control',
+                'placeholder': '1000000',
+                'type': 'number',
+                'min': 1
+            }),
+            'supplier': forms.Select(attrs={
+                'class' : 'form-control',
+            }),
+            'item': forms.Select(attrs={
+                'class' : 'form-control',
+            }),
+        }
+        
+
+class SaleUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Sale
+        fields = ['transaction_status']
+        widgets = {
+            'transaction_status': forms.Select(attrs={
+                'class' : 'form-control',
+            })
+        }

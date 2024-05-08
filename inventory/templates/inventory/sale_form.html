@@ -1,0 +1,64 @@
+{% extends 'core/base.html' %}
+{% block container %}
+
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+        <div role="alert" class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div role="alert" class="alert alert-danger">{{ message }}</div>
+        {% endif %}
+
+        {% if message.tags == 'success' %}
+            <div role="alert" class="alert alert-success">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+<div class="body d-flex py-3">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <h3 class="fw-bold mb-0">Record Sale</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-item-center">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                    <h6 class="mb-0 fw-bold ">Business Data</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3 align-items-center">
+                            {% for field in form %}
+                            <div class="col-md-6">
+                                <label for="firstname" class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                                <small class="text-muted">{{field.help_text}}</small>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- Row end  -->
+
+</div>
+</div>
+{% endblock container %}

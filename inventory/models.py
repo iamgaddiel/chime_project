@@ -36,8 +36,7 @@ class Product(models.Model):
     
     def get_current_items_in_stock(self):
         return self.quantity - self.sold
-    
-    
+
 
 class Supplier(models.Model):
     id = models.UUIDField(default=uuid4, editable=False, primary_key=True)
@@ -49,9 +48,24 @@ class Supplier(models.Model):
     address = models.TextField()
     tax_number = models.CharField(max_length=10, unique=True)
     
-    
     def __str__(self) -> str:
         return f'{self.name} | {self.phone}'
     
 
-
+class Sale(models.Model):
+    STATUS = {
+        'pending': 'Pending',
+        'completed': 'Completed',
+        'declined': 'Declined',
+    }
+    
+    id = models.UUIDField(default=uuid4, editable=False, primary_key=True)
+    sale_id = models.CharField(max_length=20)
+    buyer_name = models.CharField(max_length=20)
+    supplier = models.ForeignKey(to=Supplier, on_delete=models.CASCADE)
+    item = models.ForeignKey(to=Product, on_delete=models.CASCADE)
+    transaction_status = models.CharField(max_length=14, choices=STATUS)
+    quantity = models.IntegerField()
+    paid = models.BigIntegerField()
+    created_at = models.DateField(auto_now=True)
+    

@@ -2,6 +2,17 @@
 {% load static %}
 
 {% block container %}
+
+{% if forms.errors %}
+{% for fields in form %}
+    {% for error in fields.errors %}
+    <div role="alert" class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+{% endfor %}
+{% endif %}
+
+
+
 <div class="form-body">
     <div class="website-logo">
         <a href="{% url 'core:authentication:login' %}">
@@ -20,11 +31,16 @@
         <div class="form-holder">
             <div class="form-content">
                 <div class="form-items">
-                    <h3>Get more things done with Loggin platform.</h3>
-                    <p>Access to the most powerfull tool in the entire design and web industry.</p>
-                    <form>
-                        <input class="form-control" type="text" name="username" placeholder="E-mail Address" required>
-                        <input class="form-control" type="password" name="password" placeholder="Password" required>
+                    <h3>Get more things done with our inventory platform.</h3>
+                    <p>Access to the most powerfull tool you can get on the internet.</p>
+                    <form method="post" action="{% url 'core:authentication:login' %}">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {{ field.label }}
+                            {{ field }}
+                        {% endfor %}
+                        <!-- <input class="form-control" type="text" name="username" placeholder="E-mail Address" required>
+                        <input class="form-control" type="password" name="password" placeholder="Password" required> -->
                         <div class="form-button">
                             <button id="submit" type="submit" class="ibtn">Login</button>
                         </div>

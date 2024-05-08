@@ -7,7 +7,11 @@ from .views import (
     search_products,
     ProductDetail,
     ListSupplier,
-    CreateSupplier
+    CreateSupplier,
+    delete_supplier,
+    ListsSale,
+    CreateSales,
+    SalesUpdateView
 )
 
 
@@ -22,4 +26,10 @@ urlpatterns = [
     # supplier
     path('supplier/', ListSupplier.as_view(), name='supplier_list'),
     path('supplier/add', CreateSupplier.as_view(), name='supplier_create'),
+    path('supplier/del/<uuid:pk>/', delete_supplier, name='supplier_delete'),
+    
+    # Purchase
+    path('sale/', ListsSale.as_view(), name='sale_list'),
+    path('sale/add/', CreateSales.as_view(), name='sale_create'),
+    path('sale/update/<uuid:pk>/', SalesUpdateView.as_view(), name='sale_update'),
 ]

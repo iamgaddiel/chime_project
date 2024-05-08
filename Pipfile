@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 django = "*"
 django-cms = "*"
+vyper = "*"
+web3 = "*"
+moralis = "*"
 
 [dev-packages]
 

@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block container %}
+
+{% if err_msg %}
+<div role="alert" class="alert alert-danger">{{ err_msg }} </div>
+{% endif %}
+
+<div class="body d-flex py-lg-3 py-md-2">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                    <h3 class="fw-bold mb-0">Sale Items</h3>
+                    <div class="col-auto d-flex w-sm-100">
+                        <a href="{% url 'core:inventory:sale_create' %}">
+                            <button type="button" class="btn btn-primary btn-set-task w-sm-100" data-bs-toggle="modal" data-bs-target="#expadd"><i class="icofont-plus-circle me-2 fs-6"></i>Crate Sale Record</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Row end  -->
+        <div class="row clearfix g-3">
+            <div class="col-sm-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Items</th>
+                                    <th>Order By</th> 
+                                    <th>Date</th>
+                                    <th>Supplier</th>
+                                    <th>Paid</th>
+                                    <th>Quantity</th>
+                                    <th>Transaction Status</th>   
+                                    <th>Actions</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for object in object_list %}
+                                <tr>
+                                    <td>
+                                        <strong>{{object.sale_id }}</strong>
+                                    </td>
+                                    <td>
+                                        {{ object.item.title }} 
+                                    </td>
+                                    <td>
+                                        <img class="avatar rounded" src="{% static 'images/xs/avatar1.svg' %}" alt="">
+                                        <span class="fw-bold ms-1">{{ object.buyer_name }}</span>
+                                    </td>
+                                    <td>
+                                        {{ object.created_at }}
+                                    </td>
+                                    <td>{{ object.supplier.name  }}</td>
+                                    <td>${{ object.paid }}</td>
+                                    <td>{{ object.quantity }}</td>
+
+                                    {% if object.get_transaction_status_display == 'Pending' %}
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    {% elif object.get_transaction_status_display == 'Completed' %}
+                                    <td><span class="badge bg-success">completed</span></td>
+                                    {% elif object.get_transaction_status_display == 'Declined' %}
+                                    <td><span class="badge bg-danger">declined</span></td>
+                                    {% endif %}
+
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <a href="{% url 'core:inventory:sale_update' object.pk %}">
+                                                <button type="button" class="btn btn-outline-secondary"  data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button>
+                                            </a>
+                                            <!-- <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row End -->
+    </div>
+</div>
+
+
+{% endblock container %}
