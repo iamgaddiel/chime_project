@@ -1,11 +1,14 @@
 {% extends 'core/base.html' %}
 {% block container %}
-{% for error in form.errors %}
-{% if error %}
-<!-- TODO: display proper error message -->
-<div role="alert" class="alert alert-danger">{{ error }} - {{ error.get }}</div>
+
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+        <div role="alert" class="alert alert-danger">{{field.label}} - {{ error }}</div>
+        {% endfor %}
+    {% endfor %}
 {% endif %}
-{% endfor %}
 
 <div class="body d-flex py-3">
     <form method="post">

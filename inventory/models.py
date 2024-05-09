@@ -26,7 +26,7 @@ class Product(models.Model):
     quantity = models.IntegerField(default=1)
     category = models.CharField(max_length=18, choices=category)
     min_low_threshold_quantity = models.IntegerField(help_text='The minium quantity reached before product is considered low in inventory')
-    sold = models.IntegerField(default=0)
+    sold = models.IntegerField(default=0, blank=True)
     status = models.CharField(max_length=12, default=STATUS[0])
     sku = models.CharField(max_length=10)
     created_at = models.DateField(auto_now=True, null=True)
@@ -44,7 +44,7 @@ class Supplier(models.Model):
     name = models.CharField(max_length=20, unique=True)
     email = models.EmailField()
     item = models.CharField(max_length=10)
-    phone = models.CharField(max_length=11, unique=True)
+    phone = models.CharField(max_length=15, unique=True)
     address = models.TextField()
     tax_number = models.CharField(max_length=10, unique=True)
     

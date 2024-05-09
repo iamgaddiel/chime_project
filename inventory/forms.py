@@ -19,6 +19,39 @@ class SupplierCreationForm(forms.ModelForm):
         model = Supplier
         # fields = '__all__'
         exclude = ['supplier_id']
+        
+        
+class SupplierUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        exclude = ['supplier_id']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Grace Peters'
+            }),
+            'email': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'email',
+                'placeholder': 'email@example.com'
+            }),
+            'item': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Samsung Phone'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '+1234567890'
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'No 123 Ave.'
+            }),
+            'tax_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '345678987'
+            }),
+        }
 
 
 class SaleCreationForm(forms.ModelForm):

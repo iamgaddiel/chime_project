@@ -147,102 +147,58 @@
                         <h6 class="m-0 fw-bold">Recent Transactions</h6>
                     </div>
                     <div class="card-body">
-                        <table id="myDataTable" class="table table-hover align-middle mb-0" style="width: 100%;">
+                        <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Item</th>
-                                    <th>Customer Name</th>
-                                    <th>Payment Info</th>
-                                    <th>Price</th>
-                                    <th>Status</th>
+                                    <th>Items</th>
+                                    <th>Order By</th> 
+                                    <th>Date</th>
+                                    <th>Supplier</th>
+                                    <th>Paid</th>
+                                    <th>Quantity</th>
+                                    <th>Transaction Status</th>   
+                                    <th>Actions</th> 
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for trnx in transactions %}
                                 <tr>
-                                    <td><strong>#Order-78414</strong></td>
-                                    <td><img src="{% static 'images/product/product-1.jpg' %}"
-                                            class="avatar lg rounded me-2" alt="profile-image"><span> Oculus VR </span>
-                                    </td>
-                                    <td>Molly</td>
-                                    <td>Credit Card</td>
                                     <td>
-                                        $420
+                                        <strong>{{trnx.sale_id }}</strong>
                                     </td>
-                                    <td><span class="badge bg-warning">Progress</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#Order-58414</strong></td>
-                                    <td><img src="{% static 'images/product/product-2.jpg' %}"
-                                            class="avatar lg rounded me-2" alt="profile-image"><span>Wall Clock</span>
-                                    </td>
-                                    <td>Brian</td>
-                                    <td>Debit Card</td>
                                     <td>
-                                        $220
+                                        {{ trnx.item.title }} 
                                     </td>
-                                    <td><span class="badge bg-success">Complited</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#Order-48414</strong></td>
-                                    <td><img src="{% static 'images/product/product-3.jpg' %}"
-                                            class="avatar lg rounded me-2" alt="profile-image"><span>Note Diaries</span>
-                                    </td>
-                                    <td>Julia</td>
-                                    <td>Debit Card</td>
                                     <td>
-                                        $250
+                                        <img class="avatar rounded" src="{% static 'images/xs/avatar1.svg' %}" alt="">
+                                        <span class="fw-bold ms-1">{{ trnx.buyer_name }}</span>
                                     </td>
-                                    <td><span class="badge bg-success">Complited</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#Order-38414</strong></td>
-                                    <td><img src="{% static 'images/product/product-4.jpg' %}"
-                                            class="avatar lg rounded me-2" alt="profile-image"><span>Flower Port</span>
-                                    </td>
-                                    <td>Sonia</td>
-                                    <td>Credit Card</td>
                                     <td>
-                                        $320
+                                        {{ trnx.created_at }}
                                     </td>
-                                    <td><span class="badge bg-warning">Progress</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#Order-28414</strong></td>
-                                    <td><img src="{% static 'images/product/product-1.jpg' %}"
-                                            class="avatar lg rounded me-2" alt="profile-image"><span>Oculus VR</span>
-                                    </td>
-                                    <td>Adam H</td>
-                                    <td>Debit Card</td>
+                                    <td>{{ trnx.supplier.name  }}</td>
+                                    <td>${{ trnx.paid }}</td>
+                                    <td>{{ trnx.quantity }}</td>
+
+                                    {% if trnx.get_transaction_status_display == 'Pending' %}
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    {% elif trnx.get_transaction_status_display == 'Completed' %}
+                                    <td><span class="badge bg-success">completed</span></td>
+                                    {% elif trnx.get_transaction_status_display == 'Declined' %}
+                                    <td><span class="badge bg-danger">declined</span></td>
+                                    {% endif %}
+
                                     <td>
-                                        $20
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <a href="{% url 'core:inventory:sale_update' trnx.pk %}">
+                                                <button type="button" class="btn btn-outline-secondary"  data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button>
+                                            </a>
+                                            <!-- <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button> -->
+                                        </div>
                                     </td>
-                                    <td><span class="badge bg-warning">Progress</span></td>
                                 </tr>
-                                <tr>
-                                    <td><strong>#Order-18414</strong></td>
-                                    <td><img src="{% static 'images/product/product-2.jpg' %}"
-                                            class="avatar lg rounded me-2" alt="profile-image"><span>Wall Clock</span>
-                                    </td>
-                                    <td>Alexander</td>
-                                    <td>Debit Card</td>
-                                    <td>
-                                        $820
-                                    </td>
-                                    <td><span class="badge bg-success">Complited</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#Order-11414</strong></td>
-                                    <td><img src="{% static 'images/product/product-3.jpg' %}"
-                                            class="avatar lg rounded me-2" alt="profile-image"><span>Note Diaries</span>
-                                    </td>
-                                    <td>Gabrielle</td>
-                                    <td>Bank Emi</td>
-                                    <td>
-                                        $620
-                                    </td>
-                                    <td><span class="badge bg-success">Complited</span></td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

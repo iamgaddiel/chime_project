@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-(so3tj8t+t8#x@bw-*7e1^ex0du^8c*+g&dj74%x=y)2$rl*p(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+	"chime.pythonanywhere.com"
+]
 
 
 # Application definition
@@ -126,6 +129,8 @@ STATICFILES_DIRS = [
     '/authentication/static',
     '/core/static'
 ]
+
+STATIC_ROOT = BASE_DIR / "static_collections"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

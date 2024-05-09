@@ -5,9 +5,9 @@
 
 {% if forms.errors %}
 {% for fields in form %}
-    {% for error in fields.errors %}
-    <div role="alert" class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
+{% for error in fields.errors %}
+<div role="alert" class="alert alert-danger">{{ error }}</div>
+{% endfor %}
 {% endfor %}
 {% endif %}
 
@@ -36,13 +36,16 @@
                     <form method="post" action="{% url 'core:authentication:login' %}">
                         {% csrf_token %}
                         {% for field in form %}
-                            {{ field.label }}
-                            {{ field }}
+                        {{ field.label }}
+                        {{ field }}
                         {% endfor %}
                         <!-- <input class="form-control" type="text" name="username" placeholder="E-mail Address" required>
                         <input class="form-control" type="password" name="password" placeholder="Password" required> -->
                         <div class="form-button">
                             <button id="submit" type="submit" class="ibtn">Login</button>
+                            <a href="{% url 'core:records' %}">
+                                <button type="button" class="ibtn">View Records</button>
+                            </a>
                         </div>
                     </form>
                 </div>

@@ -7,9 +7,11 @@ from django.shortcuts import resolve_url, redirect
 from django.contrib import messages
 
 from .models import Product, Supplier, Sale
-from .forms import ProductCreateForm, SupplierCreationForm, SaleCreationForm, SaleUpdateForm
+from .forms import ProductCreateForm, SupplierCreationForm, SaleCreationForm, SaleUpdateForm, SupplierUpdateForm
 
 from core.utils import generate_random_string
+
+from core.models import Record
 
 class AddProduct(CreateView):
     """Create/Adds Product to Database """
@@ -23,6 +25,13 @@ class AddProduct(CreateView):
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         SKU = 'SKU-' + generate_random_string(5)
         form.instance.sku = SKU
+        form.instance.sold = 0
+        res = form.save()
+        Record(
+            action='ADD_PRODUCT',
+            ref_id=res.id,
+            record_type='Product'
+        ).save()
         return super().form_valid(form)
 
 
@@ -55,8 +64,21 @@ class CreateSupplier(CreateView):
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         supplier_id = 'SP-' + generate_random_string(5)
         form.instance.supplier_id = supplier_id
+        form_instance = form.save()
+        Record(
+            action='ADD_SUPPLIER',
+            ref_id=form_instance.id,
+            record_type='Supplier'
+        ).save()
         return super().form_valid(form)
 
+
+class UpdateSupplierDetails(UpdateView):
+    model = Supplier
+    form_class = SupplierUpdateForm
+    
+    def get_success_url(self) -> str:
+        return resolve_url('core:inventory:supplier_list')
 
 class ListSupplier(ListView):
     model = Supplier
@@ -110,10 +132,18 @@ class CreateSales(CreateView):
                 messages.error(self.request, 'Incorrect amount, correct amount should be {0}'.format(amount_to_be_paid))
                 return redirect('core:inventory:sale_create')
             
-            
+            # Update Product Quantity
             new_product_quantity = product_current_quantity - form_quantity
             product.quantity = new_product_quantity
             product.save()
+            
+            # Create Record
+            form_instance = form.save()
+            Record(
+                action='CREATE_SALE_TRANSACTION',
+                ref_id=form_instance.id,
+                record_type='Sale'
+            ).save()
             
         except Product.DoesNotExist:
             messages.error(self.request, 'Wrong item selected')
@@ -128,3 +158,12 @@ class SalesUpdateView(UpdateView):
     
     def get_success_url(self) -> str:
         return resolve_url('core:inventory:sale_list')
+    
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form_instance = form.save()
+        Record(
+            action='UPDATE_SALE_TRANSACTION',
+            ref_id=form_instance.id,
+            record_type='Sale'
+        ).save()
+        return super().form_valid(form)

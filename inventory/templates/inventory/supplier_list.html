@@ -55,9 +55,12 @@
                                     <td>{{ object.tax_number }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                            <button type="button" class="btn btn-outline-secondary"
-                                                data-bs-toggle="modal" data-bs-target="#expedit"><i
-                                                    class="icofont-edit text-success"></i></button>
+                                            <a href="{% url 'core:inventory:supplier_update' object.pk %}">
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    data-bs-toggle="modal" data-bs-target="#expedit"><i
+                                                        class="icofont-edit text-success"></i></button>
+
+                                            </a>
 
                                             <a href="{% url 'core:inventory:supplier_delete' object.pk %}">
                                                 <button type="button" class="btn btn-outline-secondary deleterow"><i
