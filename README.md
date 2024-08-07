@@ -4,6 +4,8 @@
 
 ![Chime Dashboard](https://ik.imagekit.io/98anbiyub/Screenshot%202024-08-07%20at%2013.30.02.png?updatedAt=1723038568704)
 
+![Chime Dashboard](https://ik.imagekit.io/98anbiyub/Screenshot%202024-08-07%20at%2014.55.17.png?updatedAt=1723038945461)
+
 ## Description 
 The [CHIME](https://chime.pythonanywhere.com) project is a prototype simulation of a supply chain. All updated information can be view by the public and all stakeholders.
 
@@ -12,4 +14,5 @@ The [CHIME](https://chime.pythonanywhere.com) project is a prototype simulation 
 ## Technologies Used
 - Framework: [Django](https://thedjangoprojet)
 - Bootstrap: [Bootstrap](https://getbootstrap.com/)
+- Virtual Environment:  [Pipenv](https://pipenv.pypa.io/en/latest/)
 
