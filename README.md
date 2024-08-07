@@ -16,3 +16,15 @@ The [CHIME](https://chime.pythonanywhere.com) project is a prototype simulation 
 - Bootstrap: [Bootstrap](https://getbootstrap.com/)
 - Virtual Environment:  [Pipenv](https://pipenv.pypa.io/en/latest/)
 
+
+## Running The Project Locally
+Running virtual environment
+```bash
+pipenv start
+pipenv install
+```
+
+Starting development server
+```bash
+python manage.py runserver
+```
